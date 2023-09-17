@@ -1,16 +1,16 @@
 <?php
 namespace App\Http\Controllers\Api\v1;
 use App\Models\Category;
-use App\Models\Room;
 
 class MenuController
 {
     public function getMenu()
     {
-        $data = array (
-            'categories' => Category::all(),
-            'rooms' => Room::all(),
-        );
+        $categories = Category::all();;
+
+        $data = [
+            'categories' => $categories->translate(app()->getLocale()),
+        ];
 
         return response()->json($data);
     }

@@ -11,4 +11,9 @@ class ItemAttribute extends Model
 
     protected $translatable = ['value'];
 
+    public function attribute()
+    {
+        return $this->belongsTo(Attribute::class, 'attribute_id');
+    }
+
 }

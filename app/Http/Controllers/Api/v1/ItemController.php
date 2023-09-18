@@ -37,10 +37,8 @@ class ItemController
             );
         }
 
-// Применяем переводы
         $item->translate(app()->getLocale());
 
-// Получаем данные
         $category = $item->category;
 
         $attributesData = [];
@@ -67,6 +65,8 @@ class ItemController
             ];
         }
 
+        $image = $item->image;
+
         $data = [
             'item' => $item->translate(app()->getLocale()),
             'category' => $category->translate(app()->getLocale()),
@@ -82,6 +82,7 @@ class ItemController
 
         $translatedItems = $items->map(function ($item) {
             $translatedItem = $item->translate(app()->getLocale());
+            $image = $item->image;
             $translatedItem['category'] = $item->category->translate(app()->getLocale());
             return $translatedItem;
         });
@@ -100,6 +101,8 @@ class ItemController
                 'error'  => 'Товар не найден'
             ]);
         }
+
+        $image = $item->image;
 
         $similar = Item::getSimilarProductsByCategory($item->category_id, $item->id);
 

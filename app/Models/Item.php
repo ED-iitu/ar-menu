@@ -37,15 +37,15 @@ class Item extends Model
         return $this->attributes();
     }
 
-    public function getImageAttribute($image)
+    public function getImageAttribute()
     {
         $cur_route = Route::current()->getName();
         $isAdmin   = !empty($cur_route);
 
         if ($isAdmin) {
-            return $image;
+            return  $this->attributes['image'];
         } else {
-            return json_decode($image);
+            return json_decode($this->attributes['image'], true);
         }
     }
 

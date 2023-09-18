@@ -68,7 +68,7 @@ class ItemController
         $image = $item->image;
 
         $data = [
-            'item' => $item->translate(app()->getLocale()),
+            'item' => $item,
             'category' => $category->translate(app()->getLocale()),
             'attributes' => $attributesData,
         ];

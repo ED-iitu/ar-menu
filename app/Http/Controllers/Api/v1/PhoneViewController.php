@@ -35,7 +35,7 @@ class PhoneViewController extends Controller
 
             return response()->json(
                 [
-                    'message' => 'Успешно сохране',
+                    'message' => 'Успешно сохранен',
                 ],
                 200
             );

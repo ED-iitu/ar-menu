@@ -8,6 +8,6 @@ class CategoryController
     {
         $data = Category::all();
 
-        return response()->json($data);
+        return response()->json($data->translate(app()->getLocale()));
     }
 }

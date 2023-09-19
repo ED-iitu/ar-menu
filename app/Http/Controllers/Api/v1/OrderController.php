@@ -24,17 +24,19 @@ class OrderController
         $orderItems = $request->get('basket');
 
         foreach ($orderItems as $item) {
-            $orderItem = new OrderItem();
+            foreach ($item->products as $product) {
+                $orderItem = new OrderItem();
 
-            $orderItem->order_id       = $order->id;
-            $orderItem->item_id        = $item['id'];
-            $orderItem->item_count     = $item['quantity'];
-            $orderItem->fact_price     = $item['price'];
-            $orderItem->original_price = $item['price'];
+                $orderItem->order_id       = $order->id;
+                $orderItem->item_id        = $product->id;
+                $orderItem->item_count     = $product->quantity;
+                $orderItem->fact_price     = $product->price;
+                $orderItem->original_price = $product->price;
 
-            $totalSum += $orderItem->fact_price;
+                $totalSum += $orderItem->fact_price;
 
-            $orderItem->save();
+                $orderItem->save();
+            }
         }
 
         $order->total_sum = $totalSum;

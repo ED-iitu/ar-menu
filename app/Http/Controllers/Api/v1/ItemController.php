@@ -15,10 +15,16 @@ class ItemController
     {
         $limit = $request->get('limit') ?? self::BESTSELLERS_LIMIT;
         $items = Item::with('category')
-            ->orderByDesc('is_bestseller')
-            ->orderByDesc('views_count')
+//            ->orderByDesc('is_bestseller')
+//            ->orderByDesc('views_count')
             ->limit($limit)
             ->get();
+
+        // Apply the getImageAttribute accessor to each item's image attribute
+        $items = $items->map(function ($item) {
+            $item->image = $item->getImagesAttribute($item->image);
+            return $item;
+        });
 
         return response()->json($items->translate(app()->getLocale()));
     }
@@ -65,10 +71,10 @@ class ItemController
             ];
         }
 
-        $image = $item->image;
+        $item->image = $item->getImagesAttribute($item->image);
 
         $data = [
-            'item' => $item,
+            'item' => $item->translate(app()->getLocale()),
             'category' => $category->translate(app()->getLocale()),
             'attributes' => $attributesData,
         ];
@@ -81,8 +87,8 @@ class ItemController
         $items = Item::with('category')->where('category_id', $catId)->get();
 
         $translatedItems = $items->map(function ($item) {
+            $item->image = $item->getImagesAttribute($item->image);
             $translatedItem = $item->translate(app()->getLocale());
-            $image = $item->image;
             $translatedItem['category'] = $item->category->translate(app()->getLocale());
             return $translatedItem;
         });
@@ -102,7 +108,7 @@ class ItemController
             ]);
         }
 
-        $image = $item->image;
+        $item->image = $item->getImagesAttribute($item->image);
 
         $similar = Item::getSimilarProductsByCategory($item->category_id, $item->id);
 

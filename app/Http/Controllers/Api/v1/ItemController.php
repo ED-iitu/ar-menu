@@ -20,7 +20,9 @@ class ItemController
             ->limit($limit)
             ->get();
 
-        return response()->json($items->translate(app()->getLocale()));
+        //->translate(app()->getLocale())
+
+        return response()->json($items);
     }
 
     public function getById($id)

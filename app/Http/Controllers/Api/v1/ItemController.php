@@ -15,18 +15,20 @@ class ItemController
     {
         $limit = $request->get('limit') ?? self::BESTSELLERS_LIMIT;
         $items = Item::with('category')
-//            ->orderByDesc('is_bestseller')
-//            ->orderByDesc('views_count')
+            ->orderByDesc('is_bestseller')
+            ->orderByDesc('views_count')
             ->limit($limit)
             ->get();
 
         // Apply the getImageAttribute accessor to each item's image attribute
         $items = $items->map(function ($item) {
             $item->image = $item->getImagesAttribute($item->image);
+            $category = $item->category;
+            $item['category'] = $category->translate(app()->getLocale());
             return $item;
         });
 
-        return response()->json($items->translate(app()->getLocale()));
+        return response()->json( $items->translate(app()->getLocale()));
     }
 
     public function getById($id)

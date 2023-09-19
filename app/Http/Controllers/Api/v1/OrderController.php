@@ -28,10 +28,10 @@ class OrderController
                 $orderItem = new OrderItem();
 
                 $orderItem->order_id       = $order->id;
-                $orderItem->item_id        = $product->id;
-                $orderItem->item_count     = $product->quantity;
-                $orderItem->fact_price     = $product->price;
-                $orderItem->original_price = $product->price;
+                $orderItem->item_id        = $product['id'];
+                $orderItem->item_count     = $product['quantity'];
+                $orderItem->fact_price     = $product['price'];
+                $orderItem->original_price = $product['price'];
 
                 $totalSum += $orderItem->fact_price;
 

@@ -83,7 +83,8 @@ class ItemController
         $items = Item::with('category')->where('category_id', $catId)->get();
 
         $translatedItems = $items->map(function ($item) {
-            $translatedItem = $item->translate(app()->getLocale());
+            //->translate(app()->getLocale())
+            $translatedItem = $item;
             $image = $item->image;
             $translatedItem['category'] = $item->category->translate(app()->getLocale());
             return $translatedItem;

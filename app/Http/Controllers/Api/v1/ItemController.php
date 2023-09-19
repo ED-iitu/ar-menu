@@ -73,15 +73,11 @@ class ItemController
             ];
         }
 
+        $item['category'] = $category->translate(app()->getLocale());
+        $item['attributes'] = $attributesData;
         $item->image = $item->getImagesAttribute($item->image);
 
-        $data = [
-            'item' => $item->translate(app()->getLocale()),
-            'category' => $category->translate(app()->getLocale()),
-            'attributes' => $attributesData,
-        ];
-
-        return response()->json($data);
+        return response()->json($item);
     }
 
     public function getByCategoryId($catId)

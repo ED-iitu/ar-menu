@@ -20,9 +20,7 @@ class ItemController
             ->limit($limit)
             ->get();
 
-        //->translate(app()->getLocale())
-
-        return response()->json($items);
+        return response()->json($items->translate(app()->getLocale()));
     }
 
     public function getById($id)
@@ -83,8 +81,7 @@ class ItemController
         $items = Item::with('category')->where('category_id', $catId)->get();
 
         $translatedItems = $items->map(function ($item) {
-            //->translate(app()->getLocale())
-            $translatedItem = $item;
+            $translatedItem = $item->translate(app()->getLocale());
             $image = $item->image;
             $translatedItem['category'] = $item->category->translate(app()->getLocale());
             return $translatedItem;

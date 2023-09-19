@@ -24,7 +24,7 @@ class OrderController
         $orderItems = $request->get('basket');
 
         foreach ($orderItems as $item) {
-            foreach ($item->products as $product) {
+            foreach ($item['products'] as $product) {
                 $orderItem = new OrderItem();
 
                 $orderItem->order_id       = $order->id;

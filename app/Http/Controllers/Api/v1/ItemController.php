@@ -110,6 +110,14 @@ class ItemController
 
         $similar = Item::getSimilarProductsByCategory($item->category_id, $item->id);
 
+
+        $similar = $similar->map(function ($item) {
+                $item->image = $item->getImagesAttribute($item->image);
+                $translatedItem = $item->translate(app()->getLocale());
+                $translatedItem['category'] = $item->category->translate(app()->getLocale());
+                return $translatedItem;
+            });
+
         return response()->json($similar);
     }
 }
